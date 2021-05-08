@@ -8,8 +8,6 @@ import java.io.File;
 import java.io.IOException;
 
 public interface ExcelService {
-    void load(File excelFile, String sheetName) throws ForecastEx;
+    void load(String excelName, String sheetName) throws ForecastEx;
     void setErrorStyle(CellStyle errorStyle);
-    void export() throws ForecastEx;
-    void saveAndClose() throws IOException;
 }

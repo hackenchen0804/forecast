@@ -1,9 +1,6 @@
 package com.hacken.forecast.controller;
 
-import com.hacken.forecast.event.ExcelRowEvent;
-import com.hacken.forecast.event.FinishEvent;
-import com.hacken.forecast.event.PrnWriterEvent;
-import com.hacken.forecast.event.SheetWriterEvent;
+import com.hacken.forecast.event.*;
 import com.hacken.forecast.exception.ForecastEx;
 import com.hacken.forecast.exception.Status;
 import com.hacken.forecast.service.ExcelService;
@@ -65,11 +62,11 @@ public class MainController {
         this.importBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                System.out.println(MainController.this.sheetsCmb.getSelectionModel().getSelectedItem().toString());
-                File file = new File(MainController.this.fileNameLbl.getText());
+                String excelFile = MainController.this.fileNameLbl.getText();
                 String sheetName = MainController.this.sheetsCmb.getSelectionModel().getSelectedItem().toString();
-                Thread thread = new Thread(new ExcelServiceThread(file,sheetName));
+                Thread thread = new Thread(new ExcelServiceThread(excelFile,sheetName));
                 thread.start();
+                MainController.this.importBtn.setDisable(true);
             }
         });
 
@@ -86,6 +83,7 @@ public class MainController {
     public void handleFinishEvent(FinishEvent finishEvent) {
         String eventMsg = finishEvent.msg();
         showEventInMsgLabel(eventMsg);
+        this.importBtn.setDisable(false);
     }
 
     @EventListener(classes = {PrnWriterEvent.class})
@@ -98,6 +96,11 @@ public class MainController {
     public void handleSheetWriterEvent(SheetWriterEvent sheetWriterEvent) {
         String eventMsg = sheetWriterEvent.msg();
         showEventInMsgLabel(eventMsg);
+    }
+
+    @EventListener(classes = {AlertEvent.class})
+    public void handleAlertEvent(AlertEvent alertEvent){
+        showAlert(alertEvent.getForecastEx());
     }
 
     private void showEventInMsgLabel(String eventMsg) {

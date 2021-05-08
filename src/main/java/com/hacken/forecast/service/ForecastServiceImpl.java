@@ -4,6 +4,7 @@ import com.hacken.forecast.exception.ForecastEx;
 import com.hacken.forecast.exception.Status;
 import com.hacken.forecast.model.Forecast;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -17,6 +18,9 @@ public class ForecastServiceImpl implements ForecastService {
     public void setScalaService(ScalaService scalaService) {
         this.scalaService = scalaService;
     }
+
+    @Autowired
+    ApplicationContext applicationContext;
 
     @Override
     public void validForecastInScala(Forecast forecast) throws ForecastEx {

@@ -33,7 +33,7 @@ public class PrnWriter {
                 SimpleDateFormat df = new SimpleDateFormat("yyMMdd");
                 String date = df.format(forecast.getPlanDate());
                 Double qty = forecast.getQty();
-                String out = String.format("%-35s%-8s%-20.2f\n", item, date, qty);
+                String out = String.format("%-35s%-6s%-20.2f\n", item, date, qty);
                 fileWriter.append(out);
             }
             fileWriter.flush();

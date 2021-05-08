@@ -49,7 +49,7 @@ public class ExcelRowServiceImpl implements ExcelRowService {
         forecast.setLine(new LineField(row, title).export());
         forecast.setQty(new QtyField(row, title).export());
         forecast.setPlanDate(new PlanDateField(row, title).export());
-        forecast.setRowNumber(row.getRowNum());
+        forecast.setRowNumber(row.getRowNum()+1);
         forecast.setSubLine(0);
     }
 }
