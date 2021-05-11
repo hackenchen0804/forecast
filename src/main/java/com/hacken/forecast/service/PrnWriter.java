@@ -13,7 +13,10 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class PrnWriter {
@@ -25,10 +28,11 @@ public class PrnWriter {
     }
 
     public void write(List<Forecast> source, File target) throws ForecastEx {
+        List<Forecast> summaryForecast= summaryForecast(source);
 
         try {
             FileWriter fileWriter = new FileWriter(target, true);
-            for (Forecast forecast : source) {
+            for (Forecast forecast : summaryForecast) {
                 String item = forecast.getItem();
                 SimpleDateFormat df = new SimpleDateFormat("yyMMdd");
                 String date = df.format(forecast.getPlanDate());
@@ -42,6 +46,23 @@ public class PrnWriter {
         } catch (IOException ioException) {
             throw new ForecastEx(Status.NOTWRITETOPRN);
         }
+    }
+
+    private List<Forecast> summaryForecast(List<Forecast> source) {
+        Map<String,Forecast> result = new HashMap<>();
+        for (Forecast forecast:source){
+            String item = forecast.getItem();
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyMMdd");
+            String dateString = simpleDateFormat.format(forecast.getPlanDate());
+            String key = item+dateString;
+            if(result.containsKey(key)){
+                Forecast tempForecast = result.get(key);
+                tempForecast.setQty(tempForecast.getQty()+forecast.getQty());
+            }else{
+                result.put(key,forecast);
+            }
+        }
+        return new ArrayList<>(result.values());
     }
 
 }

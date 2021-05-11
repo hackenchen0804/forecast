@@ -30,4 +30,9 @@ public class ScalaServiceImpl implements ScalaService {
     public List<Forecast> convertParentAndSubOrderLinesToForecasts(Forecast forecast) {
         return scalaMapper.getParentAndSubOrderLine(forecast.getOrder(),forecast.getLine());
     }
+
+    @Override
+    public List<Forecast> getWorkOrderMaterials() {
+        return scalaMapper.getWorkOrderMaterials();
+    }
 }

@@ -28,7 +28,12 @@ public class ExcelServiceImpl implements ExcelService {
     ApplicationContext applicationContext;
     PrnWriter prnWriter;
     WorkbookWriter workbookWriter;
+    ScalaService scalaService;
 
+    @Autowired
+    public void setScalaService(ScalaService scalaService) {
+        this.scalaService = scalaService;
+    }
 
     @Override
     public void setErrorStyle(CellStyle errorStyle) {
@@ -95,8 +100,11 @@ public class ExcelServiceImpl implements ExcelService {
     }
 
     private void writeToTargets() throws ForecastEx {
+        List<Forecast> workOrderMaterials = scalaService.getWorkOrderMaterials();
+        workbookWriter.write(workOrderMaterials,this.workbook,"workordermaterial");
+        workbookWriter.write(this.forecastList, this.workbook,"result");
+        this.forecastList.addAll(workOrderMaterials);
         prnWriter.write(this.forecastList, new File(this.outPrnPath, "forecast.prn"));
-        workbookWriter.write(this.forecastList, this.workbook);
     }
 
     private void initialWorkbook(FileInputStream excelFile) throws IOException {

@@ -38,7 +38,6 @@ public class Config {
         dataSource.setDriverClass(jdbcDriver);
         dataSource.setJdbcUrl(jdbcUrl);
         dataSource.setUser(username);
-        System.out.println(base64Convert.md5decode(password));
         dataSource.setPassword(base64Convert.md5decode(password));
         return dataSource;
     }

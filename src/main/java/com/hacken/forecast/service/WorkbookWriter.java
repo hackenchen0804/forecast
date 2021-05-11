@@ -25,11 +25,11 @@ public class WorkbookWriter {
         this.applicationContext = applicationContext;
     }
 
-    public void write(List<Forecast> source, Workbook target) throws ForecastEx {
-        if (target.getSheet("result") != null) {
-            target.removeSheetAt(target.getSheetIndex("result"));
+    public void write(List<Forecast> source, Workbook target,String sheetName) throws ForecastEx {
+        if (target.getSheet(sheetName) != null) {
+            target.removeSheetAt(target.getSheetIndex(sheetName));
         }
-        Sheet sheet = target.createSheet("result");
+        Sheet sheet = target.createSheet(sheetName);
         int rowNumber = 0;
         for (Forecast forecast : source) {
             Row row = sheet.createRow(rowNumber);
@@ -42,6 +42,7 @@ public class WorkbookWriter {
             row.createCell(6).setCellValue(forecast.getQty());
             rowNumber++;
         }
+
         applicationContext.publishEvent(new SheetWriterEvent(this));
     }
 }
