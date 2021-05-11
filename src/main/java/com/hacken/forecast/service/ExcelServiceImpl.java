@@ -44,6 +44,9 @@ public class ExcelServiceImpl implements ExcelService {
     @Value("${forecast.prn.outpath}")
     String outPrnPath;
 
+    @Value("${forecast.addworkorderrecords:true}")
+    String isAddWorkOrder;
+
     @Autowired
     public void setSheetService(SheetService sheetService) {
         this.sheetService = sheetService;
@@ -100,10 +103,12 @@ public class ExcelServiceImpl implements ExcelService {
     }
 
     private void writeToTargets() throws ForecastEx {
-        List<Forecast> workOrderMaterials = scalaService.getWorkOrderMaterials();
-        workbookWriter.write(workOrderMaterials,this.workbook,"workordermaterial");
         workbookWriter.write(this.forecastList, this.workbook,"result");
-        this.forecastList.addAll(workOrderMaterials);
+        if(isAddWorkOrder.equalsIgnoreCase("true")) {
+            List<Forecast> workOrderMaterials = scalaService.getWorkOrderMaterials();
+            workbookWriter.write(workOrderMaterials, this.workbook, "workordermaterial");
+            this.forecastList.addAll(workOrderMaterials);
+        }
         prnWriter.write(this.forecastList, new File(this.outPrnPath, "forecast.prn"));
     }
 
