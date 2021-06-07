@@ -10,4 +10,5 @@ public interface ScalaService {
     boolean hasSameItemInOrderLine(Forecast forecast);
     List<Forecast> convertParentAndSubOrderLinesToForecasts(Forecast forecast);
     List<Forecast> getWorkOrderMaterials();
+    String getWarehouse(Forecast forecast);
 }

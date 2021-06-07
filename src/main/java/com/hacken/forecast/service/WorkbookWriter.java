@@ -1,19 +1,15 @@
 package com.hacken.forecast.service;
 
-import com.hacken.forecast.event.PrnWriterEvent;
 import com.hacken.forecast.event.SheetWriterEvent;
 import com.hacken.forecast.exception.ForecastEx;
-import com.hacken.forecast.exception.Status;
 import com.hacken.forecast.model.Forecast;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
-import java.io.File;
 import java.util.List;
 
 @Service
@@ -40,6 +36,7 @@ public class WorkbookWriter {
             row.createCell(4).setCellValue(forecast.getLine());
             row.createCell(5).setCellValue(forecast.getSubLine());
             row.createCell(6).setCellValue(forecast.getQty());
+            row.createCell(7).setCellValue(forecast.getWarehouse());
             rowNumber++;
         }
 

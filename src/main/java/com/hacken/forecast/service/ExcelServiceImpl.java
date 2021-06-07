@@ -16,7 +16,10 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class ExcelServiceImpl implements ExcelService {
@@ -46,6 +49,7 @@ public class ExcelServiceImpl implements ExcelService {
 
     @Value("${forecast.addworkorderrecords:true}")
     String isAddWorkOrder;
+
 
     @Autowired
     public void setSheetService(SheetService sheetService) {
@@ -109,8 +113,14 @@ public class ExcelServiceImpl implements ExcelService {
             workbookWriter.write(workOrderMaterials, this.workbook, "workordermaterial");
             this.forecastList.addAll(workOrderMaterials);
         }
+
+
         prnWriter.write(this.forecastList, new File(this.outPrnPath, "forecast.prn"));
+
+
     }
+
+
 
     private void initialWorkbook(FileInputStream excelFile) throws IOException {
         ZipSecureFile.setMinInflateRatio(-1.0d);

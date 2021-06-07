@@ -10,6 +10,15 @@ public class Forecast {
     Double qty;
     Date planDate;
     Integer subLine;
+    String warehouse;
+
+    public String getWarehouse() {
+        return warehouse;
+    }
+
+    public void setWarehouse(String warehouse) {
+        this.warehouse = warehouse;
+    }
 
     public Integer getRowNumber() {
         return rowNumber;

@@ -35,4 +35,9 @@ public class ScalaServiceImpl implements ScalaService {
     public List<Forecast> getWorkOrderMaterials() {
         return scalaMapper.getWorkOrderMaterials();
     }
+
+    @Override
+    public String getWarehouse(Forecast forecast) {
+        return scalaMapper.getWarehouse(forecast.getOrder(),forecast.getLine(),forecast.getItem());
+    }
 }

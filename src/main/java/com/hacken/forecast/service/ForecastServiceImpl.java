@@ -42,6 +42,8 @@ public class ForecastServiceImpl implements ForecastService {
         if(hasSubOrderLines(forecastListInScala)){
             addMultiForecast(baseForecast, result, forecastListInScala);
         }else {
+            String warehouse = scalaService.getWarehouse(baseForecast);
+            baseForecast.setWarehouse(warehouse);
             addOneForecast(baseForecast, result);
         }
         return result;
